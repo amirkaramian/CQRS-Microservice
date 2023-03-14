@@ -1,0 +1,15 @@
+﻿/*
+    blockUI loader
+*/
+#custom-loader {
+    margin-top: 43px;
+}
+
+.loading-text {
+    color: white;
+    font-size: x-large;
+}
+
+.img-thumbnail.payment-logo {
+    height: 100px;
+}

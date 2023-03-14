@@ -1,0 +1,135 @@
+﻿@page "/business/profile/personal-information"
+@model Payscrow.WebUI.Areas.Business.Pages.Profile.PersonalInformationModel
+@{
+    ViewBag.Title = "Personal Information";
+    ViewBag.MenuItemClass = "profile-personal-info";
+}
+
+
+
+
+
+    <!--begin::Card-->
+    <div class="card card-custom card-stretch" id="page_container">
+        <!--begin::Header-->
+        <div class="card-header py-3">
+            <div class="card-title align-items-start flex-column">
+                <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
+                <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal informaiton</span>
+            </div>
+            <div class="card-toolbar">
+                <button data-bind="click: submit" class="btn btn-success mr-2">Save Changes</button>
+                <button type="reset" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Form-->
+        <form class="form">
+            <!--begin::Body-->
+            <div class="card-body">
+                <div class="row">
+                    <label class="col-xl-3"></label>
+                    <div class="col-lg-9 col-xl-6">
+                        <h5 class="font-weight-bold mb-6">Customer Info</h5>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Passport Photo</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(/themes/metronic/assets/media/users/blank.png)">
+                            <div class="image-input-wrapper">
+                                <img data-bind="safeSrc: { fileName: model.pictureFileName, fileLocation: '@*@MiscConstants.AVATAR_FILE_PATH*@'}" style="height:115px; width: 115px;border-radius: 0.32rem;" />
+                            </div>
+                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-bind="click: enablePhotoUploadEnabled" data-action="change" data-toggle="tooltip" title="" data-original-title="Change photo">
+                                <i class="fa fa-pen icon-sm text-muted"></i>
+                            </label>
+                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel photo">
+                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                            </span>
+                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-bind="click: removePhoto" data-action="remove" data-toggle="tooltip" title="Remove photo">
+                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                            </span>
+                        </div>
+                        <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
+
+                        <div style="display: none;" class="form-group mt-5" data-bind="slideToggle: photoUploadEnabled">
+                            <div class="dropzone dropzone-default dropzone-primary" data-bind="dropzone: { url: '/api/v1/clients/images/upload-profile-image', success: profilePhotoUploaded, acceptedFiles: '.jpeg,.jpg,.png,.gif', maxFiles: 1, addRemoveLinks: false, dictRemoveFile: 'remove', dictUploadCanceled: 'cancel', resizeWidth: 200 }">
+                                <div class="dz-message">
+                                    <h3>Click or drop photo to upload</h3>
+                                    <span>upload a new photo and add a face to your account.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="text" data-bind="value: model.firstName" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Last Name</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="text" data-bind="value: model.lastName" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Middle Name</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="text" data-bind="value: model.middleName" />
+                    </div>
+                </div>
+              
+                <div class="row">
+                    <label class="col-xl-3"></label>
+                    <div class="col-lg-9 col-xl-6">
+                        <h5 class="font-weight-bold mt-10 mb-6">Contact Info</h5>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <div class="input-group input-group-lg input-group-solid" data-bind="validationOptions: { insertMessages: false}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="la la-phone"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control form-control-lg form-control-solid" data-bind="value: model.phoneNumber" />
+                        </div>
+                        <span class="error-message form-text" data-bind="validationMessage: model.phoneNumber"></span>
+                        <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Email Address</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <div class="input-group input-group-lg input-group-solid">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="la la-at"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control form-control-lg form-control-solid"  data-bind="value: model.email" />
+                        </div>
+                    </div>
+                </div>
+         
+            </div>
+            <!--end::Body-->
+        </form>
+        <!--end::Form-->
+    </div>
+
+
+@section page_scripts{ 
+
+    <script type="text/javascript">
+        $(function () {
+
+            var viewModel = new PersonalInfoViewModel();
+            ko.applyBindings(viewModel, document.getElementById('page_container'));
+        });
+    </script>
+}

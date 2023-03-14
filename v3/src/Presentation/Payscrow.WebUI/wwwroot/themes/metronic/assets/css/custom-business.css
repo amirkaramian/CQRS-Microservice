@@ -1,0 +1,78 @@
+﻿/*
+    blockUI loader
+*/
+#custom-loader {
+    margin-top: 43px;
+}
+
+.loading-text {
+    color: white;
+    font-size: x-large;
+}
+
+
+.error-message{
+    color: #ff0000;
+}
+
+
+/* Side Menu */
+
+.aside {
+    background-color: #86a98a;
+}
+
+.aside-menu {
+    background-color: #86a98a;
+}
+
+.aside-menu .menu-nav > .menu-item > .menu-heading .menu-text, .aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
+    color: #fefeff;
+}
+
+
+.aside-menu .menu-nav > .menu-item > .menu-heading .menu-icon.svg-icon svg g [fill], .aside-menu .menu-nav > .menu-item > .menu-link .menu-icon.svg-icon svg g [fill] {
+
+    fill: #ffffff;
+}
+
+.aside-menu .menu-nav > .menu-item .menu-submenu .menu-item.menu-item-active > .menu-heading, .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item.menu-item-active > .menu-link {
+   background-color: #4d555e;
+}
+
+
+
+    .aside-menu .menu-nav > .menu-item.menu-item-open > .menu-heading, .aside-menu .menu-nav > .menu-item.menu-item-open > .menu-link {
+        background-color: #4d555e;
+    }
+
+    .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-heading .menu-text, .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-link .menu-text {
+        color: #fcfcfd;
+    }
+
+    .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-heading .menu-bullet.menu-bullet-dot > span, .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-link .menu-bullet.menu-bullet-dot > span {
+        background-color: #f0f0f3;
+    }
+
+    .aside-menu .menu-nav > .menu-section .menu-text {
+        color: #f6f6f7;
+    }
+
+    .aside-menu .menu-nav > .menu-item .menu-submenu ul.menu-subnav li {
+        background-color: #626b78;
+    }
+
+    .aside-menu .menu-nav > .menu-item.menu-item-open > .menu-heading .menu-icon.svg-icon svg g [fill], .aside-menu .menu-nav > .menu-item.menu-item-open > .menu-link .menu-icon.svg-icon svg g [fill] {
+ 
+        fill: #ffa800;
+    }
+
+
+
+
+
+@media (min-width: 992px) {
+    .brand {
+        background-color: #4f5a67;
+    }
+}

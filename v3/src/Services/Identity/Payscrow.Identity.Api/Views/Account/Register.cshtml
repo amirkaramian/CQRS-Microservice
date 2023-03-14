@@ -1,0 +1,145 @@
+﻿@model Payscrow.Identity.Api.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Account Registration";
+}
+
+<div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
+    <!--begin::Content body-->
+    <div class="d-flex flex-column-fluid flex-center">
+
+        <!--begin::Signup-->
+        <div class="login-form login-signup">
+            <!--begin::Form-->
+            <form class="form" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="kt_login_signup_form">
+                <!--begin::Title-->
+                <div class="pb-13 pt-lg-0 pt-5">
+                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Sign Up</h3>
+                    <p class="text-muted font-weight-bold font-size-h4">Enter your details to create your account</p>
+                </div>
+                <!--end::Title-->
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <!--begin::Form group-->
+                <div class="form-group">
+                    <input class="form-control form-control-solid h-auto py-5 px-6 rounded-lg font-size-h6" type="text" placeholder="First Name" asp-for="FirstName" autocomplete="off" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <!--end::Form group-->
+                <!--begin::Form group-->
+                <div class="form-group">
+                    <input class="form-control form-control-solid h-auto py-5 px-6 rounded-lg font-size-h6" type="text" placeholder="Last Name" asp-for="LastName" autocomplete="off" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <!--end::Form group-->
+                <!--begin::Form group-->
+                <div class="form-group">
+                    <input class="form-control form-control-solid h-auto py-5 px-6 rounded-lg font-size-h6" type="text" placeholder="Mobile Phone" asp-for="PhoneNumber" autocomplete="off" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <!--end::Form group-->
+                <!--begin::Form group-->
+                <div class="form-group">
+                    <input class="form-control form-control-solid h-auto py-5 px-6 rounded-lg font-size-h6" type="email" placeholder="Email" asp-for="Email" autocomplete="off" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <!--end::Form group-->
+                <!--begin::Form group-->
+                <div class="form-group">
+                    <input class="form-control form-control-solid h-auto py-5 px-6 rounded-lg font-size-h6" type="password" placeholder="Password" asp-for="Password" autocomplete="off" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <!--end::Form group-->
+                <!--begin::Form group-->
+                <div class="form-group">
+                    <input class="form-control form-control-solid h-auto py-5 px-6 rounded-lg font-size-h6" type="password" placeholder="Confirm password" asp-for="ConfirmPassword" autocomplete="off" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <!--end::Form group-->
+                <!--begin::Form group-->
+                <div class="form-group">
+                    <label class="checkbox mb-0">
+                        <input type="checkbox" name="agree" />I Agree the
+                        <a href="#">terms and conditions</a>.
+                        <span></span>
+                    </label>
+                </div>
+                <!--end::Form group-->
+                <!--begin::Form group-->
+                <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
+                    <button type="submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Submit</button>
+                    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Cancel</a>
+                </div>
+                <!--end::Form group-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Signup-->
+    </div>
+    <!--end::Content body-->
+</div>
+
+@section Scripts {
+    @*<partial name="_ValidationScriptsPartial" />*@
+    <script type="text/javascript">
+        $(function () {
+            var login = $('#kt_login');
+            login.addClass('login-signup-on');
+
+            KTUtil.animateClass(KTUtil.getById('kt_login_signup_form'), 'animate__animated animate__backInUp');
+
+        });
+    </script>
+}
+
+@*<div class="brand-header-block">
+        <ul class="container">
+            <li class="active">REGISTER</li>
+            <li style="margin-right: 65px;"><a asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]">LOGIN</a></li>
+        </ul>
+    </div>
+    <div class="container register-container">
+        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+            <h4 class="order-create-section-title">CREATE NEW ACCOUNT</h4>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="User.LastName" class="control-label form-label">LAST NAME</label>
+                    <input asp-for="User.LastName" class="form-control form-input" />
+                    <span asp-validation-for="User.LastName" class="text-danger" />
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="User.PhoneNumber" class="control-label form-label">PHONE NUMBER</label>
+                    <input asp-for="User.PhoneNumber" class="form-control form-input" />
+                    <span asp-validation-for="User.PhoneNumber" class="text-danger" />
+                </div>
+            </div>
+            <br /><br />
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Email" class="control-label form-label"></label>
+                    <input asp-for="Email" class="form-control form-input" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-offset-6"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Password" class="control-label form-label"></label>
+                    <input asp-for="Password" class="form-control form-input" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ConfirmPassword" class="control-label form-label"></label>
+                    <input asp-for="ConfirmPassword" class="form-control form-input" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+                <button type="submit" class="btn btn-default btn-brand">&nbsp;Register&nbsp;</button>
+            </div>
+            <br /><br />
+        </form>
+    </div>*@
+@*@section Scripts {
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    }*@

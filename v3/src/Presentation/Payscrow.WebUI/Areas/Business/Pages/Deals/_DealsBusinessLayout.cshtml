@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "_BusinessLayout";
+}
+
+
+@section vendor_styles{
+    @RenderSection("vendor_styles", false)
+}
+
+
+@section subheader {
+
+    <div class="subheader py-2 py-lg-6 subheader-solid" id="kt_subheader">
+        <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <!--begin::Info-->
+            <div class="d-flex align-items-center flex-wrap mr-1">
+                <!--begin::Page Heading-->
+                <div class="d-flex align-items-baseline flex-wrap mr-5">
+                    <!--begin::Page Title-->
+                    <h5 class="text-dark font-weight-bold my-1 mr-5">DEALS</h5>
+                    <!--end::Page Title-->
+                    <!--begin::Breadcrumb-->
+                    <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                        <li class="breadcrumb-item text-muted">
+                            <a asp-page="/Deals/Index" class="text-muted">Dashboard</a>
+                        </li>
+                        @await RenderSectionAsync("breadcrumb", false)
+                    </ul>
+                    <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page Heading-->
+            </div>
+            <!--end::Info-->
+            <!--begin::Toolbar-->
+            <div class="d-flex align-items-center">
+
+                <vc:currency-selection></vc:currency-selection>
+
+                <div class="d-flex align-items-center">
+
+                    <!--begin::Daterange-->
+                    @*<a href="#" class="btn btn-sm btn-light font-weight-bold mr-2" id="kt_dashboard_daterangepicker" data-toggle="tooltip" title="" data-placement="left" data-original-title="Select dashboard daterange">
+                            <span class="text-muted font-size-base font-weight-bold mr-2" id="kt_dashboard_daterangepicker_title">Today:</span>
+                            <span class="text-primary font-size-base font-weight-bolder" id="kt_dashboard_daterangepicker_date">Apr 29</span>
+                        </a>*@
+                    <!--end::Daterange-->
+
+                </div>
+
+
+                @*@await RenderSectionAsync("toolbar", false)*@
+            </div>
+            <!--end::Toolbar-->
+        </div>
+    </div>
+}
+
+
+@RenderBody()
+
+
+@section vendor_scripts{
+    @RenderSection("vendor_scripts", false)
+}
+
+@section app_scripts{
+
+    <script asp-append-version="true" src="~/js/payment-invite-app.min.js"></script>
+}
+
+@section page_scripts{
+    @RenderSection("page_scripts", false)
+}

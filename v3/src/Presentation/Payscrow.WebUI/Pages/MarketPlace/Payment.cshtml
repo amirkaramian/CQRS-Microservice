@@ -1,0 +1,233 @@
+﻿@page
+@model Payscrow.WebUI.Pages.MarketPlace.PaymentModel
+@{
+    Layout = "_LayoutMini";
+}
+
+@section page_styles{
+    <style type="text/css">
+
+        div.items-container {
+            display: block;
+            margin: 25px 0;
+        }
+
+        div.transaction-item {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            padding-left: 30px;
+            border: 1px solid #7fbe4c;
+            background: #eeeeee6e;
+        }
+
+        span.item-price {
+            font-weight: 600;
+            display: block;
+        }
+
+        div.trans-pay-details {
+            border: 1px solid #7fbe4c;
+            border-radius: 5px;
+            display: flex;
+        }
+    </style>
+}
+
+<section class="get-started" id="accept_transaction_page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="wizard-steps">
+                    <a class="wizard" href="#wizard1">
+                        <img data-bind="attr: { src: currentIndex() == 0 ? '/themes/payscrow/img/p1-ac.png' : '/themes/payscrow/img/p1-in.png'}" />
+                        <h4>Transaction<br />Details</h4>
+                    </a>
+                    @*           <a class="wizard" href="#wizard3">
+                            <img data-bind="attr: { src: currentIndex() == 1 ? '/themes/payscrow/img/p2-ac.png' : '/themes/payscrow/img/p2-in.png'}" />
+                            <h4>Contact<br />Information</h4>
+                        </a>*@
+                    <a class="wizard" href="#wizard4">
+                        <img data-bind="attr: { src: currentIndex() == 1 ? '/themes/payscrow/img/p3-ac.png' : '/themes/payscrow/img/p3-in.png'}" />
+                        <h4>Make<br />Payment</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <form>
+
+                    <div class="wizard-content" data-bind="template: { name: 'currentTmpl', data: currentStep }"></div>
+
+                    <div class="wizard-content">
+
+                        <a class="steps step-btn-left" data-bind="click: goPrevious, visible: canGoPrevious" href="javascript:;">
+                            <i class="fa fa-long-arrow-alt-left"></i>
+                            PREVIOUS
+                        </a>
+
+                        @*    <a class="step-btn-right" data-bind="click: goNext, enable: canGoNext, visible: currentIndex() < 1" href="javascript:;">
+                                PROCEED
+                                <i class="fa fa-long-arrow-alt-right"></i>
+                            </a>*@
+
+                        <a class="step-btn-right" href="javascript:;" data-bind="click: proceedToPay, visible: currentIndex() == 0">
+                            PROCEED TO PAYMENT
+                            <i class="fa fa-long-arrow-alt-right"></i>
+                        </a>
+                        @*<button class="btn btn-lg btn-success step-btn-right" data-bind="click: proceedToPay">Proceed To Payment</button>*@
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+
+    <script id="currentTmpl" type="text/html">
+        <div data-bind="template: { name: getTemplate, data: model }"></div>
+    </script>
+
+    <script type="text/html" id="payment_tmpl">
+        <div class=" animate__animated">
+            <h1 class="avgardd-bold">Payment Methods</h1>
+            <p class="full-width">
+                Please select your preferred payment option.
+                <span class="pull-right paginate">2 of 2</span>
+            </p>
+            <div class="content">
+                <div class="layer" data-bind="visible: hasPaymentId">
+                    <div class="row" data-bind="foreach: paymentMethodList">
+
+                        <div class="col-md-3 mt-5">
+
+                            <a href="javascript:;" data-bind="click: $parent.getPaymentLink">
+                                <img class="img-thumbnail payment-logo" data-bind="attr: {src: logoUri, alt: name }" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/html" id="customer_details_tmpl">
+
+        <div class=" animate__animated">
+            <h1 class="avgardd-bold">Contact Information</h1>
+            <p class="full-width">
+                Please fillup the details below.
+                <span class="pull-right paginate">2 of 3</span>
+            </p>
+            <div class="content">
+                <div class="layer">
+                    <div class="row">
+                        <div class="offset-2 col-md-8">
+                            <div class="form-group required">
+                                <label>Customer Name</label>
+                                <input type="email" class="form-control" data-bind="value: name">
+                                <span class="form__help"></span>
+                            </div>
+                        </div>
+                        <div class="offset-2 col-md-8">
+                            <div class="form-group required">
+                                <label>Contact Email</label>
+                                <input type="email" class="form-control" data-bind="value: emailAddress">
+                                <span class="form__help"></span>
+                            </div>
+                        </div>
+                        <div class="offset-2 col-md-8">
+                            <div class="form-group required">
+                                <label>Contact Phone</label>
+                                <input type="text" class="form-control" data-bind="value: phoneNumber">
+                                <span class="form__help"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/html" id="transaction_details_tmpl">
+        <div class=" animate__animated">
+
+            <h1 class="avgardd-bold">Transaction Details</h1>
+            <p class="full-width">
+                Please verify the items you are about to make payment for.
+                <span class="pull-right paginate">1 of 2</span>
+            </p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-borderless" data-bind="with: model.transaction">
+                        <tbody>
+                            <tr>
+                                <th style="max-width: 200px;">Merchant Name</th>
+                                <td data-bind="text: merchantName"></td>
+                            </tr>
+                            <tr>
+                                <th>Merchant Email</th>
+                                <td data-bind="text: merchantEmailAddress"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-borderless" data-bind="with: model.transaction">
+                        <tbody>
+                            <tr>
+                                <th style="max-width: 200px;">Customer Name</th>
+                                <td data-bind="text: customerName"></td>
+                            </tr>
+                            <tr>
+                                <th>Customer Email</th>
+                                <td data-bind="text: customerEmailAddress"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="items-container">
+                <div class="row" data-bind="foreach: model.items">
+                    <div class="col-lg-12">
+                        <div class="transaction-item mb-1">
+                            <h4 class="item-name" data-bind="text: name"></h4>
+                            <span class="item-price"><span data-bind="text:$parent.model.transaction.currencyCode"></span> <span data-bind="number: price, precision: 2"></span></span>
+                            <p class="item-desc" data-bind="text: description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" data-bind="with: model.transaction">
+                    <div class="trans-pay-details mb-4 mt-3">
+                        <table class="table table-borderless">
+                            <tr>
+                                <th>Total Amount</th>
+                                <th>Escrow Fee</th>
+                                <th>Grand Total Payable</th>
+                            </tr>
+                            <tr>
+                                <td><span data-bind="text:currencyCode"></span><span data-bind="number: $parent.total, precision: 2"></span></td>
+                                <td><span data-bind="text:currencyCode"></span><span data-bind="number: customerCharge, precision: 2"></span></td>
+                                <td><span data-bind="text:currencyCode"></span><span data-bind="number: grandTotalPayable, precision: 2"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+    $(function () {
+        var customerAcceptTransactionViewModel = new CustomerAcceptTransactionViewModel('@Model.TransactionId');
+        ko.applyBindings(customerAcceptTransactionViewModel, document.getElementById('accept_transaction_page'));
+    })
+    </script>
+
+}

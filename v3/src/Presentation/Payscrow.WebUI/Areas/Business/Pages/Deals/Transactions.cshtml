@@ -1,0 +1,86 @@
+﻿@page
+@model Payscrow.WebUI.Areas.Business.Pages.Deals.TransactionsModel
+@{
+    ViewBag.Title = "Deal Transactions";
+    ViewBag.MenuItemClass = "deals-transactions";
+}
+
+@section breadcrumb{
+
+    <li class="breadcrumb-item text-muted">
+        <a asp-page="/Deals/List" class="text-muted">Deals</a>
+    </li>
+
+    <li class="breadcrumb-item text-muted">
+        <a asp-page="/Deals/Transactions" class="text-muted">Transactions</a>
+    </li>
+
+}
+
+
+
+
+@section vendor_styles{
+    <link asp-append-version="true" href="~/themes/metronic/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+}
+
+<div id="page_container">
+
+    <!--begin::Card-->
+    <div class="card card-custom">
+        <div class="card-header">
+            <div class="card-title">
+                <span class="card-icon">
+                    <i class="flaticon2-shopping-cart text-primary"></i>
+                </span>
+                <h3 class="card-label">List Of Transactions</h3>
+            </div>
+            <div class="card-toolbar">
+
+
+            </div>
+        </div>
+        <div class="card-body">
+            <!--begin: Datatable-->
+            <table class="table table-separate table-head-custom" id="datatable" style="margin-top: 13px !important">
+                <thead>
+                    <tr>
+
+                        <th>Deal</th>
+                        <th>Buyer</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Charge</th>
+                        <th>Payment&nbsp;Status</th>
+                        <th>Date & Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+            <!--end: Datatable-->
+        </div>
+    </div>
+    <!--end::Card-->
+
+
+</div>
+
+
+@section vendor_scripts{
+    <script asp-append-version="true" src="~/themes/metronic/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+}
+
+
+@section page_scripts{
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            var viewModel = new DealTransactionsDatatableViewModel();
+            ko.applyBindings(viewModel, document.getElementById('page_container'));
+        });
+
+    </script>
+
+}

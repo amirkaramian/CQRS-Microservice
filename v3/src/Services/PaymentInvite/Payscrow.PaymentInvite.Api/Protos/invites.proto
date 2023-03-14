@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option csharp_namespace = "Payscrow.PaymentInvite.Grpc";
+
+package PaymentInviteApi;
+
+service PaymentInviteGrpc {
+	rpc createPaymentInvite(CreateInviteCommand) returns (CreateInviteCommandResult) {}
+}
+
+message CreateInviteCommand {
+	string buyerEmail = 1;
+	string sellerEmail = 2;
+	string buyerCountryCode = 3;
+	string buyerLocalPhoneNumber = 4;
+	string sellerCountryCode = 5;
+	string sellerLocalPhoneNumber = 6;
+	string currencyCode = 7;
+	float sellerChargePercentage = 8;
+	repeated TradeItemDto items = 9;
+}
+
+message TradeItemDto {
+	float amount = 1;
+	int32 quantity = 2;
+	string description = 3;
+}
+
+message CreateInviteCommandResult {
+	string inviteId = 1;
+}

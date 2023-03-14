@@ -1,0 +1,392 @@
+﻿@page
+@model Payscrow.WebUI.Pages.Deals.CreateModel
+@{
+    ViewData["Title"] = "Create";
+    ViewBag.BodyId = "get-started";
+}
+
+
+
+<section class="get-started" id="deal_creation_page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="wizard-steps">
+                    <a class="wizard active" href="#wizard1">
+                        <img src="~/themes/payscrow/img/p1-ac.png" />
+                        <h4>Transaction<br />Details</h4>
+                    </a>
+                    <a class="wizard" href="#wizard3">
+                        <img src="~/themes/payscrow/img/p2-in.png" />
+                        <h4>Account<br />Settings</h4>
+                    </a>
+                    <a class="wizard" href="#wizard4">
+                        <img src="~/themes/payscrow/img/p3-in.png" />
+                        <h4>Make<br />Payment</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <form method="post">
+
+
+                    <div class="wizard-content" data-bind="template: { name: 'currentTmpl', data: currentStep }"></div>
+
+                    <div style="display: none;" class="error-block" data-bind="visible: hasError">
+                        <ul data-bind="foreach: errors">
+                            <li data-bind="text: $data"></li>
+                        </ul>
+                    </div>
+
+                    <div class="wizard-content">
+                        <a class="steps step-btn-left" data-bind="click: goPrevious, visible: canGoPrevious" href="#">
+                            <i class="fa fa-long-arrow-alt-left"></i>
+                            Back
+                        </a>
+
+                        <a href="javascript:;" class="step-btn-right" data-bind="click: createDeal, visible: currentIndex() == 2, disable: loading,  css: { 'spinner spinner-white spinner-right' : loading, 'px-8': !loading()}">
+                            Create Deal
+                        </a>
+                        <a class="step-btn-right" data-bind="click: goNext, enable: canGoNext, visible: currentIndex() <= 1" href="#">
+                            Next                         
+                            <i class="fa fa-long-arrow-alt-right"></i>
+                        </a>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section scripts{
+
+    <script type="text/html" id="add_edit_item_tmpl">
+
+        <div class="modal fade" id="add-item-modal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title avgardd-bold" id="addItemModalLabel">Add Item</h5>
+                    </div>
+                    <div class="modal-body" data-bind="with: model">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group required">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" data-bind="value: name">
+                                    <span class="form__help"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group required">
+                                    <label>Price</label>
+                                    <input type="text" class="numeric-double form-control" data-bind="value: amount">
+                                    <span class="form__help"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group required">
+                                    <label>Quantity</label>
+                                    <input type="text" class="numeric-double form-control" data-bind="value: availableQuantity">
+                                    <span class="form__help"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group required">
+                                    <label>Description</label>
+                                    <textarea class="form-control" data-bind="value: description" rows="3"></textarea>
+                                    <span class="form__help"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" data-bind="checked: isTangible">
+                                    <label class="custom-control-label" for="is_tangible">Is Tangible?</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" data-bind="click: addToList" class="btn btn-primary"><i class="fa fa-plus"></i>Add to List</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </script>
+
+    <script id="currentTmpl" type="text/html">
+        <div data-bind="template: { name: getTemplate, data: model }"></div>
+    </script>
+
+    <script type="text/html" id="deal_details_tmpl">
+
+
+        <div class=" animate__animated">
+            <h1 class="avgardd-bold">Payment Details</h1>
+            <p class="full-width">
+                Please fillup the details below.
+                <span class="pull-right paginate">1 of 4</span>
+            </p>
+            <div class="content">
+                <div class="layer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group required">
+                                <label>Contact Email</label>
+                                <input type="email" class="form-control" data-bind="value: sellerEmail">
+                                <span class="form__help"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group required">
+                                <label>Contact Phone</label>
+                                <input type="text" class="form-control" data-bind="value: sellerPhone">
+                                <span class="form__help"></span>
+                            </div>
+                        </div>
+                        @*<div class="col-md-6">
+                                <div class="form-group required">
+                                    <label>Delivery Duration</label>
+                                    <select class="form-control" id="delivery_duration" name="delivery_duration">
+                                        <option value="10 Days">10 Days</option>
+                                    </select>
+                                    <span class="form__help"></span>
+                                </div>
+                            </div>*@
+                        <div class="col-md-6">
+                            <div class="form-group required">
+                                <label>Currency</label>
+                                <select class="form-control" data-bind="options: currencies, optionsValue: 'code', optionsText: 'displayName', optionsCaption: 'Choose', value: currencyCode">
+                                </select>
+                                <span class="form__help"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group required">
+                                <label>Charge Configuration</label>
+                                <select class="form-control" data-bind="options: chargeConfigList, optionsValue: 'value', optionsText: 'text', value: sellerChargePercentage">
+                                </select>
+                                <span class="form__help">here you choose how payscrow charges will be paid on your transactions</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Deal Title</label>
+                                <input type="text" class="form-control" data-bind="value: title">
+                                <span class="form__help"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Deal Description</label>
+                                <textarea class="form-control" rows="6" data-bind="value: description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </script>
+
+    <script type="text/html" id="deal_items_tmpl">
+
+        <div class="animate__animated">
+            <h1 class="avgardd-bold">Deal Items</h1>
+            <p class="full-width">
+                Please fillup the details below.
+                <span class="pull-right paginate">2 of 4</span>
+            </p>
+            <div class="content">
+                <div class="layer">
+                    <div class="table-responsive">
+
+                        <div>
+                            <span data-bind="validationMessage: items"></span>
+                        </div>
+
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Description</th>
+                                    <th style="min-width: 40px;" class="text-center">Qty</th>
+                                    <th style="min-width: 150px;" class="text-center">(<span data-bind="text: currencyCode"></span>) Unit Cost</th>
+                                    @*<th class="text-center">Total</th>*@
+                                    <th style="width:100px;" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: items">
+                                <tr>
+                                    <th data-bind="text: $index() + 1"></th>
+                                    <td>
+                                        <h6 style="font-weight:bold;" data-bind="text: name"></h6>
+                                        <p data-bind="text: description"></p>
+                                    </td>
+                                    <td data-bind="text: availableQuantity" class="text-center"></td>
+                                    <td data-bind="number: amount, precision: 2" class="text-center"></td>
+                                    @*<td class="text-center">$2300</td>*@
+                                    <td class="text-center">
+                                        <button data-bind="click: $parent.editItem" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
+                                        <button data-bind="click: $parent.deleteItem" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <a class="add-item mb-5" data-bind="click: addItem" data-backdrop="static" data-keyboard="false" href="javascript:;">
+                    Add Item
+                    <i class="fa fa-plus"></i>
+                </a>
+
+                <hr class="mb-5" />
+
+                @*<p class="sub-total row">
+                        <span class="col-md-4 text-left">
+                            Sub total: <span class="sub-total-val">0 NGN</span>
+                        </span>
+                        <span class="col-md-4 text-center">
+                            Changes: <span class="change-val">0 NGN</span>
+                        </span>
+                        <span class="col-md-4 text-right">
+                            Customer Changes: <span class="customer-changes-val">0 NGN</span>
+                        </span>
+                    </p>
+                    <p class="total-receivable">
+                        Total Receivable: <span class="total-rec-val">0 NGN</span>
+                    </p>*@
+
+            </div>
+        </div>
+
+    </script>
+
+    <script id="deal_summary_tmpl" type="text/html">
+
+
+        <div class=" animate__animated">
+            <h1 class="avgardd-bold">Deal Summary</h1>
+            <p class="full-width">
+                Please fillup the details below.
+                <span class="pull-right paginate">3 of 4</span>
+            </p>
+            <div class="content">
+                <div class="layer">
+                    <div class="table-responsive">
+                        <h3 class="avgardd-bold mb-4">Payment Details</h3>
+                        <table class="table table-striped mb-5" data-bind="with: command">
+                            <tr>
+                                <th>Title</th>
+                                <td data-bind="text: title"></td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td data-bind="text: description"></td>
+                            </tr>
+                            <tr>
+                                <th>Contact Email</th>
+                                <td data-bind="text: sellerEmail"></td>
+                            </tr>
+                            <tr>
+                                <th>Contact Phone</th>
+                                <td data-bind="text: sellerLocalPhoneNumber"></td>
+                            </tr>
+                            <tr>
+                                <th>Currency</th>
+                                <td data-bind="text: currencyCode"></td>
+                            </tr>
+                            <tr>
+                                <th>Charge Payment Configuration</th>
+                                <td data-bind="text:'I will pay ' + sellerChargePercentage() + '% of Charges'"></td>
+                            </tr>
+                        </table>
+
+                        <hr class="mb-5" />
+
+                        <h3 class="avgardd-bold mb-4">Deal Items</h3>
+
+                        <table class="table table-striped" data-bind="with: command">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name/Description</th>
+                                    <th style="width: 50px;">Qty</th>
+                                    <th style="min-width: 150px;">Unit Cost (<span data-bind="text: currencyCode"></span>)</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: items">
+                                <tr>
+                                    <td data-bind="text: $index() + 1"></td>
+                                    <td>
+                                        <h6 style="font-weight:bold" data-bind="text: name"></h6>
+                                        <p data-bind="text: description"></p>
+                                    </td>
+                                    <td data-bind="text: availableQuantity"></td>
+                                    <td data-bind="number: amount, precision: 2"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </script>
+
+    <script id="verification_tmpl" type="text/html">
+        <div class=" animate__animated">
+            <h1 class="avgardd-bold">Verify Your Email Address</h1>
+            <p class="full-width">
+                Please fillup the details below.
+                <span class="pull-right paginate">4 of 4</span>
+            </p>
+            <div class="content">
+                <div class="layer">
+
+                    <div class="col-md-6">
+                        <div class="form-group required">
+                            <label>Verification Code</label>
+                            <input type="text" class="form-control" data-bind="value: command.code">
+                            <span class="form__help"></span>
+                        </div>
+                    </div>
+
+                    <a class="step-btn-right mb-5" data-bind="click: verifyCode" href="javascript:;">
+                        Verify
+                        <i class="fa fa-check-circle"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            var createDealtViewModel = new CreateDealViewModel();
+            ko.applyBindings(createDealtViewModel, document.getElementById('deal_creation_page'));
+        })
+    </script>
+}

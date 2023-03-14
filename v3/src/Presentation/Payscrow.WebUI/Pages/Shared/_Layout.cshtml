@@ -1,0 +1,187 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/themes/payscrow/css/bootstrap.min.css">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="~/themes/payscrow/css/fontawesome.css">
+    <link rel="stylesheet" href="~/themes/payscrow/css/brands.css">
+    <link rel="stylesheet" href="~/themes/payscrow/css/solid.css">
+    <!-- Plugins -->
+    <link rel="stylesheet" href="~/themes/payscrow/css/lightslider.css" />
+    <link rel="stylesheet" href="~/themes/payscrow/css/animate.min.css" />
+    <link rel="stylesheet" href="~/themes/payscrow/css/aos.css" />
+    <link rel="stylesheet" href="~/themes/payscrow//vendors/sweetalert2/dist/sweetalert2.min.css" />
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/themes/payscrow/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="~/themes/payscrow/css/responsive.css">
+    <link asp-append-version="true" href="~/themes/payscrow/css/custom.css" rel="stylesheet" />
+    @await RenderSectionAsync("page_styles", false)
+
+    <title>PayScrow - @ViewData["Title"]</title>
+</head>
+<body>
+    <header class="animate__animated">
+        <nav class="navbar navbar-expand-md navbar-white bg-white navbar-transparent">
+            <div class="container">
+                <a class="navbar-brand logo" asp-page="/Index">
+                    <img src="~/themes/payscrow/img/logo.png" />
+                </a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#collapsable-menu" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        ☰
+                    </span>
+                </button>
+                <div class="navbar-collapse collapse" id="collapsable-menu">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">How it Works</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <div class="dropdown show" id="settings-menu">
+                                <a class="dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Support
+                                </a>
+                                <div class="dropdown-menu animate__animated animate__fadeInUp animate__faster" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">FAQ</a>
+                                    <a class="dropdown-item" href="#">Plugins</a>
+                                    <a class="dropdown-item" href="#">Developer</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link" asp-controller="Account" asp-action="Logout" >Logout</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link" asp-controller="Account" asp-action="Login" >Login</a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link signup" asp-page="/Deals/Create">Get Started</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    @RenderBody()
+
+
+
+
+    <footer>
+        <div class="container">
+            <div class="row links">
+                <div class="col-md-4">
+                    <img src="~/themes/payscrow/img/logo.png" />
+                    <p>
+                        We are an independent escrow service provider working with CBN licensed Deposit Money Banks and payment processors to ensure both buyers and sellers are happy with their transactions.
+                    </p>
+                    <a href="#">&copy; Payscrow</a>
+                </div>
+                <div class="col-md-4">
+                    <h6>USEFUL LINKS</h6>
+                    <ul>
+                        <li><a href="#">How it Works</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Login</a></li>
+                        <li><a href="#">FAQS</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Get Started</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>CONTACT US</h6>
+                    <p>
+                        Enquiries? Suggestions? We love to hear from you
+                    </p>
+                    <a class="btn border" href="#">
+                        Contact
+                    </a>
+                    <a class="btn dark" href="#">
+                        Get Started
+                    </a>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    @* div for $.blockUI *@
+    <div style="display:none">
+        <div id="custom-loader" class="loader-primary">
+            <div class="loader-demo">
+                <div class="loader-inner ball-scale-ripple-multiple mb">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="text-center mt"><span class="loading-text">Please wait...</span></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/themes/payscrow/js/jquery-3.2.1.min.js"></script>
+    <script src="~/themes/payscrow/js/popper.min.js"></script>
+    <script src="~/themes/payscrow/js/bootstrap.min.js"></script>
+    <script src="~/themes/payscrow/js/lightslider.js"></script>
+    <script src="~/themes/payscrow/js/aos.js"></script>
+    <script src="~/themes/payscrow/js/script.js" asp-append-version="true"></script>
+
+    <script asp-append-version="true" src="~/js/knockout.min.js"></script>
+    <script asp-append-version="true" src="~/js/public-app.min.js"></script>
+
+    @*<environment include="Development">*@
+    <!-- knockoutjs libs -->
+    @*<script src="~/lib/knockout/knockout-debug.js"></script>
+        <script src="~/lib/knockout/knockout.validation.js"></script>
+        <script src="~/lib/knockout.mapping/knockout.mapping.js"></script>
+        <script src="~/lib/knockout-postbox/knockout-postbox.js"></script>
+        <script src="~/lib/block-ui/jquery.blockUI.js"></script>
+        <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>*@
+
+    <!-- common application code -->
+    @*<script src="~/js/app/ko-bootstrap-modal.js" asp-append-version="true"></script>
+        <script src="~/js/app/ko-extensions.js" asp-append-version="true"></script>
+        <script src="~/js/app/wizard-step.js" asp-append-version="true"></script>
+        <script src="~/js/app/ko-bootstrap.js" asp-append-version="true"></script>
+        <script src="~/js/app/payment-verification-view-model.js" asp-append-version="true"></script>*@
+
+    <!-- application code -->
+    @*<script src="~/js/app/pu/create-deal-view-model.js" asp-append-version="true"></script>
+        <script src="~/js/app/payment-invite/create-transaction-view-model.js" asp-append-version="true"></script>*@
+
+    @*</environment>*@
+
+    @*<environment exclude="Development">
+            <script src="~/js/knockout.min.js" asp-append-version="true"></script>
+            <script src="~/js/public-app.min.js" asp-append-version="true"></script>
+        </environment>*@
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

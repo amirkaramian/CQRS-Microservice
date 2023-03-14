@@ -1,0 +1,139 @@
+version: '3.4'
+
+services:
+
+  seq:
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5340:80"
+
+  sqldata:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
+    volumes:
+      - data-volume:/var/opt/mssql
+
+  rabbitmq:
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  redisdata:
+    ports:
+      - "5560:6379"
+
+  identity-ui:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - WebUIClient=http://${PAYSCROW_EXTERNAL_DNS_NAME_OR_IP}:7300
+    ports:
+      - "7100:80"
+      - "7101:443"
+
+  paymentinvite-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - identityUrl=http://host.docker.internal:7100
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "7200:80"
+      - "7201:443"
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  webui:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - IdentityUrl=http://${PAYSCROW_EXTERNAL_DNS_NAME_OR_IP}:7100
+      - CallBackUrl=http://${PAYSCROW_EXTERNAL_DNS_NAME_OR_IP}:7300
+    ports:
+      - "7300:80"
+      - "7301:443"  
+
+  webbff:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "7400:80"
+      - "7401:443"
+
+  notifications-api:
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - identityUrl=http://host.docker.internal:7100
+       - ASPNETCORE_URLS=http://+:80
+     ports:
+       - "7500:80"
+
+  escrow-api:
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - identityUrl=http://host.docker.internal:7100
+       - ASPNETCORE_URLS=http://+:80
+     ports:
+       - "7600:80"
+       - "7601:443"
+
+  payments-api:
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - identityUrl=http://host.docker.internal:7100
+       - ASPNETCORE_URLS=http://+:80
+     ports:
+       - "7700:80"
+       - "7701:443"
+
+  milestones-api:
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - identityUrl=http://host.docker.internal:7100
+       - ASPNETCORE_URLS=http://+:80
+     ports:
+       - "7800:80"
+       - "7801:443"
+
+  dispute-api:
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - identityUrl=http://host.docker.internal:7100
+       - ASPNETCORE_URLS=http://+:80
+     ports:
+       - "7900:80"
+       - "7901:443"
+
+  escrowdirect-api:
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - identityUrl=http://host.docker.internal:7100
+       - ASPNETCORE_URLS=http://+:80
+     ports:
+       - "8000:80"
+       - "8001:443"
+
+  marketplace-api:
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - identityUrl=http://host.docker.internal:7100
+       - ASPNETCORE_URLS=http://+:80
+     ports:
+       - "8100:80"
+       - "8101:443"
+
+  admin:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "8200:80"
+      - "8201:443"
+
+
+volumes:
+  data-volume:

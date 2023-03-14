@@ -1,0 +1,86 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bundles/knockout.min.js",
+    "inputFiles": [
+      "wwwroot/lib/knockout/knockout-min.js",
+      "wwwroot/lib/knockout/knockout.validation.min.js",
+      "wwwroot/lib/knockout.mapping/knockout.mapping.min.js",
+      "wwwroot/lib/knockout-postbox/knockout-postbox.min.js",
+      "wwwroot/lib/block-ui/jquery.blockUI.min.js",
+      "wwwroot/lib/sweetalert2/sweetalert2.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/bundles/payment-invite-app.min.js",
+    "inputFiles": [
+      "wwwroot/js/app/ko-bootstrap-modal.js",
+      "wwwroot/js/app/ko-extensions.js",
+      "wwwroot/js/app/wizard-step.js",
+      "wwwroot/js/app/ko-bootstrap.js",
+      "wwwroot/js/app/business/payment-invite/*.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/bundles/project-milestone-app.min.js",
+    "inputFiles": [
+      "wwwroot/js/app/ko-bootstrap-modal.js",
+      "wwwroot/js/app/ko-extensions.js",
+      "wwwroot/js/app/wizard-step.js",
+      "wwwroot/js/app/ko-bootstrap.js",
+      "wwwroot/js/app/business/project-milestone/*.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/bundles/profile-app.min.js",
+    "inputFiles": [
+      "wwwroot/js/app/ko-bootstrap-modal.js",
+      "wwwroot/js/app/ko-extensions.js",
+      "wwwroot/js/app/wizard-step.js",
+      "wwwroot/js/app/ko-bootstrap.js",
+      "wwwroot/js/app/business/profile/*.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/bundles/public-app.min.js",
+    "inputFiles": [
+      "wwwroot/js/app/ko-bootstrap-modal.js",
+      "wwwroot/js/app/ko-extensions.js",
+      "wwwroot/js/app/wizard-step.js",
+      "wwwroot/js/app/ko-bootstrap.js",
+      "wwwroot/js/app/public/*.js",
+      "wwwroot/js/app/public/market-place/*.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

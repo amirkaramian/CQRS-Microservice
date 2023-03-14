@@ -1,0 +1,289 @@
+﻿@page "/business/deals/transaction-details"
+@model Payscrow.WebUI.Areas.Business.Pages.Deals.TransactionDetailsModel
+@{
+    ViewBag.Title = "Deal Transaction Details";
+    ViewBag.MenuItemClass = "deals-transactions";
+}
+
+
+
+<div id="page_container">
+
+    <!--begin::Page Layout-->
+    <div class="d-flex flex-row">
+        <!--begin::Aside-->
+        <div class="flex-column offcanvas-mobile w-300px w-xl-325px" id="kt_profile_aside">
+
+            <div class="card card-custom gutter-b">
+
+                <div class="card-header border-0 pt-5">
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label font-weight-bolder text-dark">Status Timeline</span>
+                        @*<span class="text-muted mt-3 font-weight-bold font-size-sm">24 Books to Return</span>*@
+                    </h3>
+                    <div class="card-toolbar">
+                        <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                            <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="ki ki-bold-more-hor"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                <!--begin::Navigation-->
+                                <ul class="navi navi-hover py-5">
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link">
+                                            <span class="navi-icon">
+                                                <i class="flaticon2-drop"></i>
+                                            </span>
+                                            <span class="navi-text">New Group</span>
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link">
+                                            <span class="navi-icon">
+                                                <i class="flaticon2-list-3"></i>
+                                            </span>
+                                            <span class="navi-text">Contacts</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="navi-separator my-3"></li>
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link">
+                                            <span class="navi-icon">
+                                                <i class="flaticon2-magnifier-tool"></i>
+                                            </span>
+                                            <span class="navi-text">Help</span>
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link">
+                                            <span class="navi-icon">
+                                                <i class="flaticon2-bell-2"></i>
+                                            </span>
+                                            <span class="navi-text">Privacy</span>
+                                            <span class="navi-link-badge">
+                                                <span class="label label-light-danger label-rounded font-weight-bold">5</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--end::Navigation-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="card-header">
+                        <div class="card-title">
+                            <h3 class="card-label">Timeline 5</h3>
+                        </div>
+                    </div>*@
+                <div class="card-body">
+                    <!--begin::Example-->
+                    <div class="example example-basic">
+                        <div class="example-preview">
+                            <!--begin::Timeline-->
+                            <div class="timeline timeline-5">
+                                <div class="timeline-items" data-bind="foreach: transactionStatusLogs">
+                                    <!--begin::Item-->
+                                    <div class="timeline-item">
+                                        <!--begin::Icon-->
+                                        <div class="timeline-media bg-light-primary">
+                                            <span class="svg-icon svg-icon-primary svg-icon-md">
+                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group-chat.svg-->
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24" />
+                                                        <path d="M16,15.6315789 L16,12 C16,10.3431458 14.6568542,9 13,9 L6.16183229,9 L6.16183229,5.52631579 C6.16183229,4.13107011 7.29290239,3 8.68814808,3 L20.4776218,3 C21.8728674,3 23.0039375,4.13107011 23.0039375,5.52631579 L23.0039375,13.1052632 L23.0206157,17.786793 C23.0215995,18.0629336 22.7985408,18.2875874 22.5224001,18.2885711 C22.3891754,18.2890457 22.2612702,18.2363324 22.1670655,18.1421277 L19.6565168,15.6315789 L16,15.6315789 Z" fill="#000000" />
+                                                        <path d="M1.98505595,18 L1.98505595,13 C1.98505595,11.8954305 2.88048645,11 3.98505595,11 L11.9850559,11 C13.0896254,11 13.9850559,11.8954305 13.9850559,13 L13.9850559,18 C13.9850559,19.1045695 13.0896254,20 11.9850559,20 L4.10078614,20 L2.85693427,21.1905292 C2.65744295,21.3814685 2.34093638,21.3745358 2.14999706,21.1750444 C2.06092565,21.0819836 2.01120804,20.958136 2.01120804,20.8293182 L2.01120804,18.32426 C1.99400175,18.2187196 1.98505595,18.1104045 1.98505595,18 Z M6.5,14 C6.22385763,14 6,14.2238576 6,14.5 C6,14.7761424 6.22385763,15 6.5,15 L11.5,15 C11.7761424,15 12,14.7761424 12,14.5 C12,14.2238576 11.7761424,14 11.5,14 L6.5,14 Z M9.5,16 C9.22385763,16 9,16.2238576 9,16.5 C9,16.7761424 9.22385763,17 9.5,17 L11.5,17 C11.7761424,17 12,16.7761424 12,16.5 C12,16.2238576 11.7761424,16 11.5,16 L9.5,16 Z" fill="#000000" opacity="0.3" />
+                                                    </g>
+                                                </svg>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                        </div>
+                                        <!--end::Icon-->
+                                        <!--begin::Info-->
+                                        <div class="timeline-desc timeline-desc-light-primary">
+                                            <span class="font-weight-bolder text-primary text-uppercase" data-bind="text: moment(createUtc).format('DD-MM-YYYY')"></span>
+                                            <span class="font-weight-bolder text-warning text-uppercase" data-bind="text: moment(createUtc).format('hh:mm a')"></span>
+                                            <p class="font-weight-normal text-dark-50 pb-2"><span data-bind="text: comment"></span>  <span class="label label-inline label-light-warning font-weight-bolder" data-bind="text: transactionStatus">pending</span></p>
+                                          
+                                        </div>
+                                        <!--end::Info-->
+                                    </div>
+                                    <!--end::Item-->
+                  
+                                </div>
+                            </div>
+                            <!--end::Timeline-->
+                        </div>
+                    </div>
+                    <!--end::Example-->
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <!--end::Aside-->
+        <!--begin::Layout-->
+        <div class="flex-row-fluid ml-lg-7">
+            <!--begin::Card-->
+            <div class="card card-custom gutter-b">
+                <div class="card-body p-0">
+                    <!-- begin: Invoice-->
+                    <!-- begin: Invoice header-->
+                    <div class="row justify-content-center py-8 px-8 py-md-20 px-md-0" data-bind="with: transaction">
+                        <div class="col-md-10">
+                            <div class="d-flex justify-content-between pb-10 pb-md-10 flex-column flex-md-row">
+                                <div>
+                                    <h4>TRANSACTION</h4>
+                                    <h1 class="font-weight-boldest mb-5">DETAILS</h1>
+                                    <span data-bind="text: status" class="label label-xl label-light-warning label-inline mr-2"></span>
+                                    <span style="display:none;" data-bind="visible: inEscrow" class="label label-xl label-info label-inline mr-2">In Escrow</span>
+                                </div>
+
+                                <div class="d-flex flex-column align-items-md-end px-0">
+                                    <!--begin::Logo-->
+                                    <a href="#" class="">
+                                        @*<img src="~/themes/metronic/assets/media/logos/logo-dark.png" alt="" />*@
+                                        <h3 data-bind="text: dealTitle"></h3>
+                                    </a>
+                                    <!--end::Logo-->
+                                    <span class="d-flex flex-column align-items-md-end opacity-70">
+                                        <span data-bind="text: dealDescription"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="border-bottom w-100"></div>
+                            <div class="d-flex justify-content-between pt-6">
+                                <div class="d-flex flex-column flex-root">
+                                    <span class="font-weight-bolder mb-2">TRANSACTION DATE</span>
+                                    <span class="opacity-70" data-bind="text: moment(createUtc()).format('Do MMM, YYYY')"></span>
+                                </div>
+                                <div class="d-flex flex-column flex-root">
+                                    <span class="font-weight-bolder mb-2">TRANSACTION NO.</span>
+                                    <span class="opacity-70" data-bind="text: number"></span>
+                                </div>
+                                <div class="d-flex flex-column flex-root">
+                                    <span class="font-weight-bolder mb-2">DELIVERED TO.</span>
+                                    <span class="opacity-70" data-bind="with: deliveryAddress">
+
+                                        <!-- ko text: street--><!--/ko-->,
+                                        <!-- ko text: city--><!--/ko-->, <!-- ko text: state --><!--/ko-->, <br /> <!-- ko text: country--><!--/ko-->.
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: Invoice header-->
+                    <!-- begin: Invoice body-->
+                    <div class="row justify-content-center py-8 px-8 py-md-0 px-md-0">
+                        <div class="col-md-10">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="pl-0 font-weight-bold text-muted text-uppercase">Ordered Items</th>
+                                            <th class="text-right font-weight-bold text-muted text-uppercase">Qty</th>
+                                            <th class="text-right font-weight-bold text-muted text-uppercase">Unit Price</th>
+                                            <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: transactionItems">
+                                        <tr class="font-weight-boldest">
+                                            <td class="border-0 pl-0 pt-7 d-flex align-items-center">
+                                                <!--begin::Symbol-->
+                                                <div class="symbol symbol-40 flex-shrink-0 mr-4 bg-light">
+                                                    <div class="symbol-label" style="background-image: url('/themes/metronic/assets/media/products/11.png')"></div>
+                                                </div>
+                                                <!--end::Symbol-->
+                                                <div>
+                                                    <div data-bind="text: name"></div>
+
+                                                    <p class="font-weight-lighter" data-bind="text: description"></p>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-right pt-7 align-middle" data-bind="text: quantity"></td>
+                                            <td class="text-right pt-7 align-middle"><!-- ko text: $parent.transaction.currencySymbol--><!--/ko--> <span data-bind="number: amount, precision: 2"></span></td>
+                                            <td class="text-primary pr-0 pt-7 text-right align-middle"><!-- ko text: $parent.transaction.currencySymbol--><!--/ko--> <span data-bind="number: total, precision: 2"></span></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: Invoice body-->
+                    <!-- begin: Invoice footer-->
+                    <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0 mx-0">
+                        <div class="col-md-10">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+
+                                            <th class="font-weight-bold text-muted text-uppercase">PAYMENT STATUS</th>
+                                            <th class="font-weight-bold text-muted text-uppercase">PAYMENT DATE</th>
+                                            <th class="font-weight-bold text-muted text-uppercase">ESCROW CHARGE</th>
+                                            <th class="font-weight-bold text-muted text-uppercase text-right">TOTAL AMOUNT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="font-weight-bolder">
+
+                                            <td data-bind="text: transaction.paymentStatus"></td>
+                                            <td>Jan 07, 2020</td>
+                                            <td class="text-warning font-size-h3 font-weight-boldest text-right">
+                                                <span data-bind="text: transaction.currencyCode" style="font-size:1rem" class="font-weight-normal"></span>
+                                                <span data-bind="number: transaction.sellerChargeAmount, precision: 2"></span>
+                                            </td>
+                                            <td class="text-primary font-size-h3 font-weight-boldest text-right">
+                                                <span data-bind="text: transaction.currencyCode" style="font-size:1rem" class="font-weight-normal"></span>
+                                                <span data-bind="number: transaction.totalAmount, precision: 2"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: Invoice footer-->
+                    <!-- begin: Invoice action-->
+                    <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+                        <div class="col-md-10">
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-light-primary font-weight-bold" onclick="window.print();">Download Details</button>
+                                <button type="button" class="btn btn-primary font-weight-bold" onclick="window.print();">Print Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: Invoice action-->
+                    <!-- end: Invoice-->
+                </div>
+            </div>
+            <!--end::Card-->
+        </div>
+        <!--end::Layout-->
+    </div>
+    <!--end::Page Layout-->
+</div>
+
+@section page_scripts{
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            var viewModel = new DealTransactionDetailViewModel('@Model.TransactionId');
+            ko.applyBindings(viewModel, document.getElementById('page_container'));
+        });
+
+    </script>
+
+}
+
+

@@ -1,0 +1,136 @@
+version: '3.4'
+
+services:
+  seq:
+    image: datalust/seq:latest
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2017-latest 
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  redisdata:
+    image: redis:6.2.2-alpine
+
+  notifications-api:
+    image: ${REGISTRY:-payscrow}/notifications.api:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Services/Notifications/Api/Payscrow.Notifications.Api/Dockerfile
+    depends_on:
+      - sqldata
+
+  identity-ui:
+    image: ${REGISTRY:-payscrow}/identity.api:${PLATFORM:-linux}-${TAG:-v4}
+    build:
+      context: .
+      dockerfile: Services/Identity/Payscrow.Identity.Api/Dockerfile
+    depends_on:
+      - sqldata
+      - rabbitmq
+      - notifications-api
+      - redisdata
+
+  paymentinvite-api:
+    image: ${REGISTRY:-payscrow}/paymentinvite.api:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Services/PaymentInvite/Payscrow.PaymentInvite.Api/Dockerfile
+    depends_on:
+      - sqldata
+      - identity-ui
+      - rabbitmq
+      - notifications-api
+      - redisdata
+
+  webui:
+    image: ${REGISTRY:-payscrow}/webui:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Presentation/Payscrow.WebUI/Dockerfile
+
+  admin:
+    image: ${REGISTRY:-payscrow}/admin:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Presentation/Payscrow.Admin/Dockerfile
+    depends_on:
+      - sqldata
+      - redisdata
+
+  webbff:
+    image: ${REGISTRY:-payscrow}/webbff:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: ApiGateway/Web.Bff/Payscrow.Web.HttpAggregator/Dockerfile
+    depends_on:
+      - identity-ui
+      - paymentinvite-api
+
+  escrow-api:
+    image: ${REGISTRY:-payscrow}/escrow.api:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Services/Escrow/Payscrow.Escrow.Api/Dockerfile
+    depends_on:
+      - sqldata
+      - identity-ui
+      - rabbitmq
+      - notifications-api
+      - redisdata
+
+  payments-api:
+    image: ${REGISTRY:-payscrow}/payments.api:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Services/Payments/Payscrow.Payments.Api/Dockerfile
+    depends_on:
+      - sqldata
+      - identity-ui
+      - rabbitmq
+      - notifications-api
+
+  milestones-api:
+    image: ${REGISTRY:-payscrow}/milestones.api:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Services/ProjectMilestone/Payscrow.ProjectMilestone.Api/Dockerfile
+    depends_on:
+      - sqldata
+      - identity-ui
+      - rabbitmq
+      - notifications-api
+
+  dispute-api:
+    image: ${REGISTRY:-payscrow}/dispute.api:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Services/DisputeResolution/Payscrow.DisputeResolution.Api/Dockerfile
+    depends_on:
+      - sqldata
+      - identity-ui
+      - rabbitmq
+      - notifications-api
+
+  escrowdirect-api:
+    image: ${REGISTRY:-payscrow}/escrowdirect.api:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Services/EscrowDirect/Payscrow.EscrowDirect.Api/Dockerfile
+    depends_on:
+      - sqldata
+      - identity-ui
+      - rabbitmq
+      - notifications-api
+
+  marketplace-api:
+    image: ${REGISTRY:-payscrow}/marketplace.api:${PLATFORM:-linux}-${TAG:-v3}
+    build:
+      context: .
+      dockerfile: Services/MarketPlace/Payscrow.MarketPlace.Api/Dockerfile
+    depends_on:
+      - sqldata
+      - identity-ui
+      - rabbitmq
+      - notifications-api

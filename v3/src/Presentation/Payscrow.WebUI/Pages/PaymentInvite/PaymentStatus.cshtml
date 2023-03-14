@@ -1,0 +1,22 @@
+﻿@page
+@model Payscrow.WebUI.Pages.PaymentInvite.PaymentStatusModel
+@{
+}
+
+<div id="payment_verification_page">
+
+</div>
+
+
+
+@section scripts{
+
+
+    <script type="text/javascript">
+        $(function () {
+            var paymentVerificationViewModel = new PaymentVerificationViewModel('@Model.PaymentMethodId', '@Model.PaymentId', '@Model.ExternalTransactionId', '@Model.Status');
+            ko.applyBindings(paymentVerificationViewModel, document.getElementById('payment_verification_page'));
+        })
+    </script>
+
+}

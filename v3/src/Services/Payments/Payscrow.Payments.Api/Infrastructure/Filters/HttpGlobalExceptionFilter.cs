@@ -1,0 +1,98 @@
+﻿namespace Payscrow.Payments.Api.Infrastructure.Filters
+{
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+    using Payscrow.Payments.Api.Application.Common.Exceptions;
+    using Payscrow.Payments.Api.Infrastructure.ActionResults;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Text;
+
+    public class HttpGlobalExceptionFilter : IExceptionFilter
+    {
+        private readonly IWebHostEnvironment env;
+        private readonly ILogger<HttpGlobalExceptionFilter> logger;
+
+        public HttpGlobalExceptionFilter(IWebHostEnvironment env, ILogger<HttpGlobalExceptionFilter> logger)
+        {
+            this.env = env;
+            this.logger = logger;
+        }
+
+        public void OnException(ExceptionContext context)
+        {
+            logger.LogError(new EventId(context.Exception.HResult),
+                context.Exception,
+                context.Exception.Message);
+
+            if (context.Exception.GetType() == typeof(ValidationException))
+            {
+                var e = context.Exception as ValidationException;
+
+                var response = context.HttpContext.Response;
+
+                response.Clear();
+                response.StatusCode = StatusCodes.Status400BadRequest;
+                response.ContentType = "application/json";
+
+                var errorResponse = new JsonValidationResponse();
+
+                foreach (var failure in e.Failures)
+                {
+                    foreach (var error in failure.Value)
+                    {
+                        errorResponse.Errors.Add(new JsonValidationResponse.Error { Field = failure.Key, Message = error });
+                    }
+                }
+
+                response.WriteAsync(JsonConvert.SerializeObject(
+                    errorResponse,
+                    new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
+                Encoding.Default, context.HttpContext.RequestAborted).Wait();
+            }
+            else
+            {
+                var json = new JsonErrorResponse
+                {
+                    Messages = new[] { "An error occur.Try it again." }
+                };
+
+                if (env.IsDevelopment())
+                {
+                    json.DeveloperMessage = context.Exception;
+                }
+
+                // Result asigned to a result object but in destiny the response is empty. This is a known bug of .net core 1.1
+                // It will be fixed in .net core 1.1.2. See https://github.com/aspnet/Mvc/issues/5594 for more information
+                context.Result = new InternalServerErrorObjectResult(json);
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            }
+            context.ExceptionHandled = true;
+        }
+
+        private class JsonErrorResponse
+        {
+            public string[] Messages { get; set; }
+
+            public object DeveloperMessage { get; set; }
+        }
+
+        public class JsonValidationResponse
+        {
+            public bool Success => Errors.Count == 0;
+
+            public List<Error> Errors { get; set; } = new List<Error>();
+
+            public class Error
+            {
+                public string Field { get; set; }
+                public string Message { get; set; }
+            }
+        }
+    }
+}
